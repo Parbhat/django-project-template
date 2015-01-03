@@ -123,7 +123,7 @@ LOGGING = {
     },
     'handlers': {
         'mail_admins': {
-            'class': 'django.utils.log.AdminEmailHandler'
+            'class': 'django.utils.log.AdminEmailHandler',
             'filters': ['require_debug_false'],
             'level': 'ERROR',
         },
