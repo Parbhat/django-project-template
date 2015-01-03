@@ -98,7 +98,7 @@ INSTALLED_APPS = [
 ]
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = env_setting('{{ project_name }}_SECRET_KEY', fail_if_missing=True)
+SECRET_KEY = env_setting('{{ project_name|upper }}_SECRET_KEY', fail_if_missing=True)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
