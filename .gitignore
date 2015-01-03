@@ -35,9 +35,6 @@ nosetests.xml
 .project
 .pydevproject
 
-# Tmux configs
-/*.tmux.conf
-
 # Env secrets
 /*.env
 
