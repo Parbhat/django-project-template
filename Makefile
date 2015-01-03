@@ -39,7 +39,7 @@ develop :
 
 test :
 # Run the test cases
-	$(MANAGE_CMD) test --settings={{ project_name }}.settings.test $(TEST_CASES)
+	$(MANAGE_CMD) test --settings={{ project_name }}.settings.testing $(TEST_CASES)
 
 server :
 # Run a local web server
