@@ -1,0 +1,4 @@
+*.key filter=encrypt diff=encrypt
+*.csr filter=encrypt diff=encrypt
+*.crt filter=encrypt diff=encrypt
+.env filter=encrypt diff=encrypt
