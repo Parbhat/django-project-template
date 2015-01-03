@@ -30,13 +30,24 @@ DATABASES = {
 CACHES = {
     'default': {
         'BACKEND': 'redis_cache.cache.RedisCache',
-        'LOCATION': '%s:0' % env_setting('{{ project_name|upper }}_REDIS_SERVER')
+        'LOCATION': '%s:0' % env_setting('{{ project_name|upper }}_REDIS_SERVER'),
         'OPTIONS': {
             'PARSER_CLASS': 'redis.connection.HiredisParser',
             'CLIENT_CLASS': 'redis_cache.client.DefaultClient',
         },
     },
 }
+
+# Logging settings
+LOGGING['handlers']['syslog'] = {
+    'class': 'logging.handlers.SysLogHandler',
+    'formatter': 'verbose',
+    'level': 'INFO',
+    'facility': 'user',
+    'address': '/dev/log',
+}
+LOGGING['loggers']['django.request']['handlers'] = ['mail_admins', 'console', 'syslog',]
+LOGGING['loggers']['{{ project_name }}']['handlers'] = ['console', 'syslog',]
 
 # Celery settings
 BROKER_BACKEND = 'redis'

@@ -132,22 +132,14 @@ LOGGING = {
             'formatter': 'verbose',
             'level': 'INFO',
         },
-        'syslog': {
-            'class': 'logging.handlers.SysLogHandler',
-            'formatter': 'verbose',
-            'filters': ['require_debug_false'],
-            'level': 'INFO',
-            'facility': 'user',
-            'address': '/dev/log',
-        },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins', 'console', 'syslog',],
+            'handlers': ['mail_admins', 'console',],
             'propagate': True,
         },
         '{{ project_name }}': {
-            'handlers': ['console', 'syslog',],
+            'handlers': ['console',],
             'propagate': True,
         },
     }
