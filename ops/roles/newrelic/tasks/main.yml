@@ -1,0 +1,14 @@
+---
+- name: configure new relic apt repo
+  apt_repository: repo='deb http://apt.newrelic.com/debian/ newrelic non-free' state=present
+
+- name: trust new relic gpg key
+  apt_key: url=https://download.newrelic.com/548C16BF.gpg state=present
+
+- name: install new relic sysmond
+  apt: pkg=newrelic-sysmond update-cache=yes
+
+- name: configure new relic license key
+  shell: nrsysmond-config --set license_key={% templatetag openvariable %} newrelic_license {% templatetag closevariable %}
+  notify:
+    - restart new relic sysmond

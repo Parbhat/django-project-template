@@ -1,0 +1,10 @@
+---
+- name: add redis apt repo
+  apt_repository: repo=ppa:chris-lea/redis-server
+
+- name: install redis
+  apt: pkg=redis-server state=installed update-cache=yes
+
+- name: configure redis to allow remote connections
+  lineinfile: dest=/etc/redis/redis.conf regexp='^bind .*' line='bind 0.0.0.0'
+  notify: restart redis

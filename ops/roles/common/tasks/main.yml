@@ -1,0 +1,28 @@
+---
+- name: set timezone
+  copy: content={% templatetag openvariable %} timezone {% templatetag closevariable %} dest=/etc/timezone owner=root group=root mode=0644
+  notify:
+    - update timezone
+
+- name: install system packages
+  apt: pkg={% templatetag openvariable %} item {% templatetag closevariable %} state=installed update-cache=yes
+  with_items:
+    - build-essential
+    - gcc
+    - vim
+    - tmux
+    - curl
+    - locate
+    - htop
+    - ufw
+    - ntp
+
+- name: configure firewall
+  ufw: rule={% templatetag openvariable %} item.rule {% templatetag closevariable %} port={% templatetag openvariable %} item.port {% templatetag closevariable %} from={% templatetag openvariable %} item.from|default("0.0.0.0/0"){% templatetag closevariable %}
+  with_items: ufw_rules
+
+- name: enable firewall
+  ufw: logging=on policy=deny state=enabled
+
+- name: run ntpd server
+  service: name=ntp state=running enabled=yes

@@ -1,0 +1,46 @@
+---
+- name: install system packages
+  apt: pkg={% templatetag openvariable %} item {% templatetag closevariable %} state=installed update-cache=yes
+  with_items:
+    - build-essential
+    - gcc
+    - git
+    - libevent-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - libpq-dev
+    - libncurses5-dev
+    - libmysqlclient15-dev
+    - libjpeg-dev
+    - python-dev
+    - python-setuptools
+    - python-software-properties
+    - python-mysqldb
+
+- name: install python packages
+  easy_install: name={% templatetag openvariable %} item {% templatetag closevariable %}
+  with_items:
+    - pip
+    - virtualenv
+
+- name: create project directory
+  file: state={% templatetag openvariable %} item{% templatetag closevariable %}state }} path={% templatetag openvariable %} item{% templatetag closevariable %}path }}
+  with_items:
+    - { path: "{% templatetag openvariable %} project_root {% templatetag closevariable %}" state: directory }
+    - { path: "{% templatetag openvariable %} project_src {% templatetag closevariable %}" , state: directory }
+    - { path: "{% templatetag openvariable %} project_venv {% templatetag closevariable %}" state: directory }
+
+- name: create project user
+  user: home={% templatetag openvariable %} project_root {% templatetag closevariable %}home/ name={% templatetag openvariable %} project_user {% templatetag closevariable %} shell=/bin/bash state=present
+
+- name: install authorized keys
+  authorized_key:
+    user={% templatetag openvariable %} project_user {% templatetag closevariable %}
+    key="{% templatetag openvariable %}lookup('pipe', 'curl -s https://github.com/' + item + '.keys'){% templatetag closevariable %}"
+  with_items: authorized_github_users
+
+- name: give project user supervisorctl sudo perm
+  lineinfile: "dest=/etc/sudoers state=present regexp='^{% templatetag openvariable %} project_user {% templatetag closevariable %}' line='{% templatetag openvariable %} project_user {% templatetag closevariable %} ALL=(ALL) NOPASSWD:/usr/bin/supervisorctl'"
+
+- name: update project directory perms
+  file: owner={% templatetag openvariable %} project_user {% templatetag closevariable %{% templatetag openvariable %}group={{ project_user {% templatetag closevariable %{% templatetag openvariable %}path={{ project_root {% templatetag closevariable %} state=directory recurse=yes

@@ -1,0 +1,4 @@
+---
+- name: restart new relic sysmond
+  service: name=newrelic-sysmond state=restarted
+  sudo: yes

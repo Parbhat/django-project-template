@@ -1,0 +1,22 @@
+---
+- name: add nginx apt repo
+  apt_repository: repo=ppa:nginx/stable
+
+- name: install nginx
+  apt: pkg=nginx state=installed update-cache=yes
+
+- name: create nginx log directory
+  file: state=directory path=/var/log/nginx mode=755
+
+- name: install nginx conf
+  template: src=nginx.conf dest=/etc/nginx/nginx.conf
+
+- name: remove default site
+  file: state=absent path=/etc/nginx/sites-enabled/default
+
+- name: install nginx site conf
+  template: src=nginx-site.conf dest=/etc/nginx/sites-enabled/{% templatetag openvariable %} project_name{% templatetag closevariable %} 
+  notify: restart nginx
+
+- name: create nginx ssl dir
+  file: state=directory path=/etc/nginx/ssl

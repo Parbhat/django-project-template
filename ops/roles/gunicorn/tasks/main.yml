@@ -1,0 +1,6 @@
+- name: create gunicorn logging directory
+  file: state=directory path=/var/log/gunicorn
+
+- name: install gunicorn supervisor conf
+  template: src=supervisor-gunicorn.conf dest=/etc/supervisor/conf.d/{% templatetag openvariable %} project_name {% templatetag closevariable %}.gunicorn.conf
+  notify: reload supervisor

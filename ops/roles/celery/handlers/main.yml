@@ -1,0 +1,8 @@
+---
+- name: restart celeryd
+  supervisorctl: name={% templatetag openvariable %} project_name {% templatetag closevariable %}_celeryd state=restarted
+  sudo: yes
+
+- name: restart celerybeat
+  supervisorctl: name={% templatetag openvariable %} project_name {% templatetag closevariable %}_celerybeat state=restarted
+  sudo: yes
