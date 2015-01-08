@@ -14,7 +14,7 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseServerError
 
 from .utils.db import is_database_available, is_redis_available
-from .utils.server import supervisor_prcess_states
+from .utils.server import supervisor_process_states
 
 
 logger = logging.getLogger(__name__)
