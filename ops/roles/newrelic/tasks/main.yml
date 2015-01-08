@@ -9,6 +9,6 @@
   apt: pkg=newrelic-sysmond update-cache=yes
 
 - name: configure new relic license key
-  shell: nrsysmond-config --set license_key={% templatetag openvariable %} newrelic_license {% templatetag closevariable %}
+  shell: nrsysmond-config --set license_key={{ newrelic_license }}
   notify:
     - restart new relic sysmond

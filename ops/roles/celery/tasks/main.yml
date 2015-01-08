@@ -2,11 +2,11 @@
   file: state=directory path=/var/log/celery
 
 - name: install celery worker supervisor conf
-  template: src=supervisor-celeryd.conf dest=/etc/supervisor/conf.d/{% templatetag openvariable %} project_name {% templatetag closevariable %}celeryd.conf
+  template: src=supervisor-celeryd.conf dest=/etc/supervisor/conf.d/{{ project_name }}.celeryd.conf
   when: worker is defined and worker == true
   notify: reload supervisor
 
 - name: install celery beat supervisor conf
-  template: src=supervisor-celerybeat.conf dest=/etc/supervisor/conf.d/{% templatetag openvariable %} project_name {% templatetag closevariable %}celerybeat.conf
+  template: src=supervisor-celerybeat.conf dest=/etc/supervisor/conf.d/{{ project_name }}.celerybeat.conf
   when: beat is defined and beat == true
   notify: reload supervisor

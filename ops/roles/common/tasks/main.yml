@@ -1,11 +1,11 @@
 ---
 - name: set timezone
-  copy: content={% templatetag openvariable %} timezone {% templatetag closevariable %} dest=/etc/timezone owner=root group=root mode=0644
+  copy: content={{ timezone }} dest=/etc/timezone owner=root group=root mode=0644
   notify:
     - update timezone
 
 - name: install system packages
-  apt: pkg={% templatetag openvariable %} item {% templatetag closevariable %} state=installed update-cache=yes
+  apt: pkg={{ item }} state=installed update-cache=yes
   with_items:
     - build-essential
     - gcc
@@ -18,7 +18,7 @@
     - ntp
 
 - name: configure firewall
-  ufw: rule={% templatetag openvariable %} item.rule {% templatetag closevariable %} port={% templatetag openvariable %} item.port {% templatetag closevariable %} from={% templatetag openvariable %} item.from|default("0.0.0.0/0"){% templatetag closevariable %}
+  ufw: rule={{ item.rule }} port={{ item.port }} from={{ item.from|default("0.0.0.0/0") }}
   with_items: ufw_rules
 
 - name: enable firewall

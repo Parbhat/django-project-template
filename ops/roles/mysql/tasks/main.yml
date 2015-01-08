@@ -3,7 +3,7 @@
   apt: pkg=mysql-server-5.6 state=installed update-cache=yes
 
 - name: install mysql confs
-  copy: src={% templatetag openvariable %} item {% templatetag closevariable %} dest=/etc/mysql/conf.d/{% templatetag openvariable %} item {% templatetag closevariable %}
+  copy: src={{ item }} dest=/etc/mysql/conf.d/{{ item }}
   with_items:
     - utf8_innodb.cnf
     - slow_query.cnf
@@ -16,13 +16,13 @@
     - restart mysql
 
 - name: create project database
-  mysql_db: name={% templatetag openvariable %} project_name {% templatetag closevariable %} collation=utf8_general_ci encoding=utf8 state=present
+  mysql_db: name={{ project_name }} collation=utf8_general_ci encoding=utf8 state=present
 
 - name: set connect from anywhere privileges
   mysql_user: name=root password= priv=*.*:ALL host=% append_privs=yes
 
 - name: install mysql auto backup
-  apt: pkg={% templatetag openvariable %} item {% templatetag closevariable %} state=installed update-cache=yes
+  apt: pkg={{ item }} state=installed update-cache=yes
   with_items:
     - mysql-client
     - automysqlbackup

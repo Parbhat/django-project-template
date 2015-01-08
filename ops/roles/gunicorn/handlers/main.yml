@@ -1,4 +1,4 @@
 ---
 - name: restart gunicorn
-  supervisorctl: name={% templatetag openvariable %} project_name {% templatetag closevariable %}_gunicorn state=restarted
+  supervisorctl: name={{ project_name }}_gunicorn state=restarted
   sudo: yes

@@ -15,7 +15,7 @@
   file: state=absent path=/etc/nginx/sites-enabled/default
 
 - name: install nginx site conf
-  template: src=nginx-site.conf dest=/etc/nginx/sites-enabled/{% templatetag openvariable %} project_name{% templatetag closevariable %} 
+  template: src=nginx-site.conf dest=/etc/nginx/sites-enabled/{{ project_name }}
   notify: restart nginx
 
 - name: create nginx ssl dir

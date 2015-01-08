@@ -1,4 +1,4 @@
 ---
 - name: configure rsyslog to send to papertrail
-  lineinfile: "dest=/etc/rsyslog.conf regexp='.*papertrail.*' line='*.*  @{% templatetag openvariable %} papertrail_host {% templatetag closevariable %}
+  lineinfile: "dest=/etc/rsyslog.conf regexp='.*papertrail.*' line='*.*  @{{ papertrail_host }}'"
   notify: restart rsyslog
