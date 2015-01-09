@@ -1,2 +1,0 @@
-[mysqld]
-slow_query_log=1

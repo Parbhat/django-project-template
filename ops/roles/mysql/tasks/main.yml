@@ -2,15 +2,12 @@
 - name: install mysql
   apt: pkg=mysql-server-5.6 state=installed update-cache=yes
 
-- name: install mysql confs
-  copy: src={{ item }} dest=/etc/mysql/conf.d/{{ item }}
-  with_items:
-    - utf8_innodb.cnf
-    - slow_query.cnf
-    - transaction.cnf
-    - bind_address.cnf
-    - packet_size.cnf
-    - buffer_pool_size.cnf
+- name: touch mysqld conf
+  copy: src=mysqld.cnf dest=/etc/mysql/conf.d/mysqld.cnf
+
+- name: set mysql conf
+  lineinfile: "dest=/etc/mysql/conf.d/mysqld.cnf regexp='^{{ item.name }} .*' line='{{ item.name }} = {{ item.value }}'"
+  with_items: "{{ mysqld_vars|default([]) }}"
   notify:
     - reload mysql
     - restart mysql
