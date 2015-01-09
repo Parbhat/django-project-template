@@ -20,3 +20,4 @@
 
 - name: create nginx ssl dir
   file: state=directory path=/etc/nginx/ssl
+  notify: restart nginx
