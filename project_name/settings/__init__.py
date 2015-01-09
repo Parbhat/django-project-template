@@ -10,7 +10,7 @@ try:
     # environment variables from a .env file located in the project root
     # directory by default, unless another env file is specified in
     # the ENV_FILE
-    env_file = os.environ.get('{{ project_name|upper }}_ENV_FILE', '.env')
+    env_file = os.environ.get('ENV_FILE', '.env')
     with open(env_file, 'r') as f:
         for line in f:
             match = re.search(r'([A-Za-z_0-9]+)=(.*)$', line)
