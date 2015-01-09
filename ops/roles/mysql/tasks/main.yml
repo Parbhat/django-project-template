@@ -20,9 +20,3 @@
 
 - name: set connect from anywhere privileges
   mysql_user: name=root password= priv=*.*:ALL host=% append_privs=yes
-
-- name: install mysql auto backup
-  apt: pkg={{ item }} state=installed update-cache=yes
-  with_items:
-    - mysql-client
-    - automysqlbackup
