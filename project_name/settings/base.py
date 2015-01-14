@@ -78,9 +78,10 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.transaction.TransactionMiddleware',
     '{{ project_name }}.libs.common.middleware.PjaxMiddleware',
 ]
+
+ATOMIC_REQUESTS = True
 
 ROOT_URLCONF = '{{ project_name }}.urls'
 
