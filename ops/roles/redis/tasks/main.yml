@@ -4,6 +4,10 @@
 
 - name: install redis
   apt: pkg=redis-server state=installed update-cache=yes
+  
+- name: enable overcommit
+  sysctl: name=vm.overcommit_memory value=1 state=present
+  notify: restart redis
 
 - name: configure redis to allow remote connections
   lineinfile: dest=/etc/redis/redis.conf regexp='^bind .*' line='bind 0.0.0.0'
