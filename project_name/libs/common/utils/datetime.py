@@ -13,6 +13,8 @@ import datetime as dt
 import logging
 import time
 
+from django.utils import timezone
+
 LOGGER = logging.getLogger(__name__)
 
 
