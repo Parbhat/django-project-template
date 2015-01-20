@@ -1,4 +1,5 @@
 ---
 - name: configure rsyslog to send to papertrail
-  lineinfile: "dest=/etc/rsyslog.conf regexp='.*papertrail.*' line='*.*  @{{ papertrail_host }}'"
+  lineinfile: "dest=/etc/rsyslog.conf line='*.*  @{{ item }}'"
+  with_items: "{{ papertrail_hosts|default([]) }}"
   notify: restart rsyslog
